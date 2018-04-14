@@ -1,6 +1,7 @@
 'use strict';
 
 const http = require('http');
+const jade = require('jade');
 const server = http.createServer((req, res) => {
     //console.info('[' + new Date() + '] Requested by ' + req.connection.remoteAddress);
     const now = new Date();
@@ -14,9 +15,23 @@ const server = http.createServer((req, res) => {
     switch (req.method) {
       case 'GET':
         //res.write('GET ' + req.url);
-        const fs = require('fs');
-        const rs = fs.createReadStream('./form.html');
-        rs.pipe(res);
+        //const fs = require('fs');
+        //const rs = fs.createReadStream('./form.html');
+        //rs.pipe(res);
+        if (req.url === '/enquetes/yaki-shabu') {
+          res.write(jade.renderFile('./form.jade', {
+            path: req.url,
+            firstItem: '焼き肉',
+            secondItem: 'しゃぶしゃぶ'
+          }));
+        } else if (req.url === '/enquetes/rice-bread') {
+          res.write(jade.renderFile('./form.jade', {
+            path: req.url,
+            firstItem: 'ごはん',
+            secondItem: 'パン'
+          }));
+        }
+        res.end();
         break;
 
       case 'POST':
