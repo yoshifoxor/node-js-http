@@ -11,10 +11,10 @@
   "dependencies": {
     "pug": "^2.0.0-rc.4"
   },
-  "engines": {
-    "node": "6.11.1"
-  },
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6"
+  },
+  "engines": {
+    "node": "8.9.4"
   }
 }
