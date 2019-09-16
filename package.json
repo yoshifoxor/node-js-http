@@ -12,7 +12,10 @@
     "http-auth": "^2.2.8",
     "jade": "^1.11.0"
   },
+  "devDependencies": {
+    "pug-cli": "^1.0.0-alpha6"
+  },
   "engines": {
-    "node": "6.11.1"
+    "node": "8.9.4"
   }
 }
