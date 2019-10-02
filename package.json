@@ -1,21 +1,8 @@
 {
-  "name": "js-http",
+  "name": "node-js-http",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "http-auth": "^2.2.8",
-    "jade": "^1.11.0"
-  },
-  "devDependencies": {
-    "pug-cli": "^1.0.0-alpha6"
-  },
-  "engines": {
-    "node": "8.9.4"
-  }
+  "repository": "git@github.com:yoshifoxor/node-js-http.git",
+  "author": "yoshifoxor <kurmelsa5d@gmail.com>",
+  "license": "MIT"
 }
