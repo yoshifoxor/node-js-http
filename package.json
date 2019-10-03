@@ -1,6 +1,7 @@
 {
   "name": "node-js-http",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "repository": "git@github.com:yoshifoxor/node-js-http.git",
   "author": "yoshifoxor <kurmelsa5d@gmail.com>",
@@ -10,5 +11,8 @@
   },
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6"
+  },
+  "engines": {
+    "node": "~10"
   }
 }
