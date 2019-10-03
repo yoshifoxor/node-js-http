@@ -1,9 +1,23 @@
 'use strict';
 const http = require('http');
 const pug = require('pug');
-const server = http.createServer((req, res) => {
-  const now = new Date();
-  console.info('[' + now + '] Requested by ' + req.connection.remoteAddress);
+const auth = require('http-auth');
+const basic = auth.basic(
+  { realm: 'Enquetes Area.' },
+  (username, password, callback) => {
+    callback(username === 'guest' && password === 'guest');
+  });
+const server = http.createServer(basic, (req, res) => {
+  console.info('Requested by ' + req.connection.remoteAddress);
+
+  if (req.url === '/logout') {
+    res.writeHead(401, {
+      'Content-Type': 'text/plain; charset=utf-8'
+    });
+    res.end('ログアウトしました');
+    return;
+  }
+
   res.writeHead(200, {
     'Content-Type': 'text/html; charset=utf-8'
   });
@@ -43,7 +57,7 @@ const server = http.createServer((req, res) => {
       }).on('end', () => {
         body = Buffer.concat(body).toString();
         const decoded = decodeURIComponent(body);
-        console.info('[' + now + '] 投稿: ' + decoded);
+        console.info('投稿: ' + decoded);
         res.write('<!DOCTYPE html><html lang="ja"><body><h1>' + decoded + 'が投稿されました</h1></body></html>');
         res.end();
       });
@@ -52,11 +66,11 @@ const server = http.createServer((req, res) => {
       break;
   }
 }).on('error', (e) => {
-  console.error('[' + new Date() + '] Server Error', e);
+  console.error('Server Error', e);
 }).on('clientError', (e) => {
-  console.error('[' + new Date() + '] Client Error', e);
+  console.error('Client Error', e);
 });
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
-  console.info('[' + new Date() + '] Listening on ' + port);
+  console.info('Listening on ' + port);
 });
