@@ -11,5 +11,8 @@
   },
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6"
+  },
+  "engines": {
+    "node": "~14"
   }
 }
