@@ -7,8 +7,7 @@
   "author": "yoshifoxor <yshs.adachi@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "http-auth": "3.2.3",
-    "pug": "2.0.0-rc.4"
+    "pug": "^3.0.2"
   },
   "devDependencies": {
     "pug-cli": "^1.0.0-alpha6"
