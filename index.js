@@ -1,19 +1,33 @@
 'use strict';
 const http = require('http');
-const html = `
-<!DOCTYPE html>
-<html lang="ja">
-  <body>
-    <h1>HTMLの一番大きい見出しを表示します</h1>
-  </body>
-</html>
-`;
+
 const server = http.createServer((req, res) => {
-    console.info(`[${new Date()}] Requested by ${req.socket.remoteAddress}`);
+    const now = new Date();
+    console.info(`[${now}] Requested by ${req.socket.remoteAddress}`);
     res.writeHead(200, {
-      'Content-Type': 'text/html; charset=utf-8',
+      'Content-Type': 'text/plain; charset=utf-8',
     });
-    res.write(html);
+
+    switch (req.method) {
+      case 'GET':
+        res.write(`GET ${req.url}`);
+        break;
+      case 'POST':
+        res.write(`POST ${req.url}`);
+        let rawData = '';
+
+        req.on('data', chunk => {
+          rawData = rawData + chunk;
+        }).on('end', () => {
+          console.info(`[${now}] Data posted: ${rawData}`);
+        });
+        break;
+      case 'DELETE':
+        res.write(`DELETE ${req.url}`);
+        break;
+      default:
+        break;
+    }
     res.end();
   }).on('error', e => {
     console.error(`[${new Date()}] Server Error`, e);
