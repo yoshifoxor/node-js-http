@@ -31,7 +31,12 @@ const server = http.createServer((req, res) => {
           bread: 'パン',
           pizza: 'ピザ',
         };
-        if (req.url === '/enquetes/yaki-shabu') {
+
+        if (req.url === '/') {
+          res.write(pug.renderFile('./index.pug'));
+        } else if (req.url === '/enquetes') {
+          res.write(pug.renderFile('./enquete.pug'));
+        } else if (req.url === '/enquetes/yaki-shabu') {
           write(req, res, firstItems.yakiniku, secondItems.shabu);
         } else if (req.url === '/enquetes/rice-bread') {
           write(req, res, firstItems.rice, secondItems.bread);
@@ -65,7 +70,7 @@ const server = http.createServer((req, res) => {
   }).on('clientError', e => {
     console.error(`[${new Date()}] Client Error`, e);
   });
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 server.listen(port, () => {
   console.info(`[${new Date()}] Listening on port:${port}`);
