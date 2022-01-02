@@ -1,6 +1,12 @@
 'use strict';
 const http = require('http');
 const pug = require('pug');
+const auth = require('http-auth');
+
+const basic = auth.basic({
+  realm: 'Enquetes Area.',
+  file: `${__dirname}/users.htpasswd`,
+});
 
 const write = (req, res, ...data) => {
   res.write(
@@ -12,8 +18,17 @@ const write = (req, res, ...data) => {
   );
 };
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(basic.check((req, res) => {
     console.info(`Requested by ${req.socket.remoteAddress}`);
+
+    if (req.url === '/logout') {
+      res.writeHead(401, {
+        'Content-Type': 'text/plain; charset=utf-8',
+      });
+      res.end('ログアウトしました');
+      return;
+    }
+
     res.writeHead(200, {
       'Content-Type': 'text/html; charset=utf-8',
     });
@@ -64,7 +79,7 @@ const server = http.createServer((req, res) => {
       default:
         break;
     }
-  }).on('error', e => {
+  })).on('error', e => {
     console.error(`Server Error`, e);
   }).on('clientError', e => {
     console.error(`Client Error`, e);
