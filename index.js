@@ -9,14 +9,21 @@ const html = `
 </html>
 `;
 const server = http.createServer((req, res) => {
-  res.writeHead(200, {
-    'Content-Type': 'text/html; charset=utf-8',
+    console.info(`[${new Date()}] Requested by ${req.socket.remoteAddress}`);
+    res.writeHead(200, {
+      'Content-Type': 'text/html; charset=utf-8',
+    });
+    res.write(html);
+    res.end();
+  })
+  .on('error', e => {
+    console.error(`[${new Date()}] Server Error`, e);
+  })
+  .on('clientError', e => {
+    console.error(`[${new Date()}] Client Error`, e);
   });
-  res.write(html);
-  res.end();
-});
 const port = 8000;
 
 server.listen(port, () => {
-  console.log(`Listening on port:${port}`);
+  console.info(`[${new Date()}] Listening on port:${port}`);
 });
