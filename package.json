@@ -1,6 +1,6 @@
 {
   "name": "node-js-http",
-  "version": "1.0.312",
+  "version": "1.0.314",
   "main": "index.js",
   "repository": "https://github.com/yoshifoxor/node-js-http.git",
   "author": "yoshifoxor <yshs.adachi@gmail.com>",
