@@ -1,6 +1,16 @@
 'use strict';
 const http = require('http');
-const fs = require('fs');
+const pug = require('pug');
+
+const write = (req, res, ...data) => {
+  res.write(
+    pug.renderFile('./form.pug', {
+      path: req.url,
+      firstItem: data[0],
+      secondItem: data[1],
+    })
+  );
+};
 
 const server = http.createServer((req, res) => {
     const now = new Date();
@@ -11,8 +21,24 @@ const server = http.createServer((req, res) => {
 
     switch (req.method) {
       case 'GET':
-        const rs = fs.createReadStream('./form.html');
-        rs.pipe(res);
+        const firstItems = {
+          yakiniku: '焼き肉',
+          rice: 'ごはん',
+          sushi: '寿司',
+        };
+        const secondItems = {
+          shabu: 'しゃぶしゃぶ',
+          bread: 'パン',
+          pizza: 'ピザ',
+        };
+        if (req.url === '/enquetes/yaki-shabu') {
+          write(req, res, firstItems.yakiniku, secondItems.shabu);
+        } else if (req.url === '/enquetes/rice-bread') {
+          write(req, res, firstItems.rice, secondItems.bread);
+        } else if (req.url === '/enquetes/sushi-pizza') {
+          write(req, res, firstItems.sushi, secondItems.pizza);
+        }
+        res.end();
         break;
       case 'POST':
         let rawData = '';
@@ -21,9 +47,7 @@ const server = http.createServer((req, res) => {
             rawData += chunk;
           }).on('end', () => {
             const answer = new URLSearchParams(rawData);
-            const body = `${answer.get('name')}さんは${answer.get(
-              'yaki-shabu'
-            )}に投票しました`;
+            const body = `${answer.get('name')}さんは${answer.get('favorite')}に投票しました`;
             const html = `<!DOCTYPE html>
             <html lang="ja">
             <body><h1>${body}</h1></body>

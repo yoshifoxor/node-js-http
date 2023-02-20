@@ -1,8 +1,11 @@
 {
   "name": "node-js-http",
-  "version": "1.0.314",
+  "version": "1.0.315",
   "main": "index.js",
   "repository": "https://github.com/yoshifoxor/node-js-http.git",
   "author": "yoshifoxor <yshs.adachi@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "pug": "~3"
+  }
 }
