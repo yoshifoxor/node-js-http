@@ -63,18 +63,18 @@ const server = http.createServer(basic.check((req, res) => {
         let rawData = '';
 
         req.on('data', chunk => {
-          rawData = rawData + chunk;
-        }).on('end', () => {
-          const answer = new URLSearchParams(rawData);
-          const body = `${answer.get('name')}さんは${answer.get('favorite')}に投票しました`;
-          const html = `<!DOCTYPE html>
+            rawData += chunk;
+          }).on('end', () => {
+            const answer = new URLSearchParams(rawData);
+            const body = `${answer.get('name')}さんは${answer.get('favorite')}に投票しました`;
+            const html = `<!DOCTYPE html>
             <html lang="ja">
             <body><h1>${body}</h1></body>
             </html>`;
-          console.info(`${body}`);
-          res.write(html);
-          res.end();
-        });
+            console.info(`${body}`);
+            res.write(html);
+            res.end();
+          });
         break;
       default:
         break;
